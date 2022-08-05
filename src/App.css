@@ -1,38 +1,169 @@
-.App {
-  text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    background-color: rgb(245, 245, 245);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+
+/* 모달창 */
+
+.modal-window {
+    width: 550px;
+    height: 280px;
+
+    border-radius: 80px;
+    background-color: rgb(255, 255, 255);
+
+    box-shadow: 3px 3px 30px rgb(167, 167, 167);
+    padding: 80px;
+    color: black;
+
+    font-family: 'A1';
 }
 
-.App-link {
-  color: #61dafb;
+.modalIcon {
+    font-size: 2.3rem;
+    margin-bottom: 20px;
+    color: #828282;
+    font-weight: bold;
+}
+.modalMassage {
+    font-size: 1.9rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+/* 메인 */
+
+.hi {
+    font-family: 'A1', cursive;
+    font-size: 1.6rem;
+    margin: 15px;
+
+    color: #4c4c4c;
+}
+
+.title {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 5rem;
+    color: rgb(91, 157, 162);
+}
+
+.smallt {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 3rem;
+    color: rgb(170, 197, 199);
+}
+
+
+
+
+/* 메인화면 카카오 로그인하기 버튼 */
+
+.kakaoLogin {
+
+    cursor: pointer;
+
+    font-size: 1.2rem;
+    background-color: rgb(253, 249, 43);
+    color: rgb(0, 0, 0);
+    transition: 0.3s;
+
+    width: 200px;
+    height: 80px;
+    border-radius: 40px;
+
+    border: 0;
+    margin: 30px;
+}
+
+.kakaoLogin:hover {
+    color: black;
+    box-shadow: 5px 3px 5px rgb(161, 161, 161);
+    transition: 0.7s;
+}
+
+
+
+
+/* 에러 페이지 */
+
+.errorContainer {
+    /* 에러 페이지를 감싸는 컨테이너 */
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.errorIcon {
+    /* 표정 */
+    margin: 30px 0px;
+    font-size: 3.5rem;
+    color: #000000;
+}
+
+.errorNum {
+    /* 404 Error */
+    font-size: 2.7rem;
+    font-family: 'A1';
+    font-weight: 800;
+    color: rgb(226, 111, 111);
+}
+
+.errorMassage {
+    /* 존재하지 않는 페이지입니다! */
+    font-size: 1.7rem;
+    font-family: 'A1';
+}
+
+
+
+/* 상단 내비게이션 바 */
+
+.top-nav {
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.5;
+}
+
+.top-nav a {
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 20px 23px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'GothicA1-Regular';
+    transition: 0.2s;
+}
+
+.top-nav a:hover {
+    background-color: rgb(121, 121, 121);
+    color: rgb(255, 255, 255);
+    transition: 0.2s;
+}
+
+
+/* 폰트 링크 */
+@font-face {
+    font-family: 'A1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/GothicA1-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
 }
