@@ -11,20 +11,8 @@ let user = createSlice({
 })
 export let { getCurrentUserName } = user.actions;
 
-let commuteStandard = createSlice({
-  name: 'commuteStandard',
-  initialState: 0,
-  reducers: {
-    setStandard(current, newStandard) {
-      return newStandard.payload;
-    }
-  }
-})
-export let { setStandard } = commuteStandard.actions;
-
 export default configureStore({
   reducer: {
     user: user.reducer,
-    commuteStandard: commuteStandard.reducer,
   }
 })
