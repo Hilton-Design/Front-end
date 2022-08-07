@@ -4,6 +4,7 @@ import React from "react";
 import Modal from '../compnents/Modal'
 import {useSelector, useDispatch} from "react-redux";
 import {getCurrentUserName} from "../store";
+import kakao_login from "../assets/img/kakao_login_medium_narrow.png"
 
 const Home = () => {
 
@@ -83,7 +84,11 @@ const Home = () => {
               show
               ? <div><button onClick={goToWork} className="btn end">출근하기!</button>
               <button onClick={getOffWork} className="btn end">퇴근하기!</button></div>
-              : <button onClick={login} className="btn start" >카카오 로그인하기</button>
+              : <a href={
+                  'https://kauth.kakao.com/oauth/authorize?client_id=a33a6ac40ea15278b115b07b8250e8ea&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code'
+              }>
+                  <img src={kakao_login} onClick={login} className="btn start" />
+                </a>
             }
         </div>
       }
