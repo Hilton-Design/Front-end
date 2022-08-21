@@ -1,43 +1,64 @@
 import axios from "axios";
-import {useState} from "react";
-import React from "react";
+import React, {useState} from "react";
 import Modal from '../compnents/Modal'
-import {useSelector, useDispatch} from "react-redux";
-import {getCurrentUserName} from "../store";
-import kakao_login from "../assets/img/kakao_login_medium_narrow.png"
+import {useDispatch, useSelector} from "react-redux";
+import {setIsLogin, setUsername, setAccessToken, setRefreshToken} from "../store";
 
 const Home = () => {
 
   const [modal, setModal] = useState(false);
   const [message, setMessage] = useState('');
-  const [show, setShow] = useState(false);
-  const [userName, setUserName] = useState('');
 
   const dispatch = useDispatch();
+  const username = useSelector(state => state.username);
+  const isLogin = useSelector(state => state.isLogin);
+  const accessToken = useSelector(state => state.jwtToken.accessToken);
+  const refreshToken = useSelector(state => state.jwtToken.refreshToken);
 
-  let state = useSelector((state) => state)
-
-  console.log(state.user)
+  console.log("isLogin : " + isLogin)
+  console.log("username : " + username)
+  console.log("accessToken : " + accessToken)
+  console.log("refreshToken : " + refreshToken)
 
   const openModal = (msg) => {
     setMessage(msg)
     setModal(true)
-    setTimeout(() => setModal(false), 800);
+    setTimeout(() => setModal(false), 1000);
   }
 
   const login = () => {
-    axios.get('http://localhost:8080/currentUser')
+    axios.post("http://localhost:8080/auth",  {
+        email: "test@mail.com",
+        password: "test"
+    })
       .then((res) => {
-        console.log(res.data)
-        dispatch(getCurrentUserName(res.data))
-
-        setUserName(state.user)
-        setShow(true)
-
-        openModal("로그인 성공!!")
+          openModal("로그인 성공!!!!");
+          console.log(res.data);
+          dispatch(setIsLogin(true));
+          dispatch(setAccessToken(res.data.accessToken));
+          dispatch(setRefreshToken(res.data.refreshToken));
+          getCurrentUser();
       })
       .catch(() => {
-        openModal("로그인 실패 ㅠㅠ")
+        openModal("로그인 실패")
+      })
+  }
+
+  const getCurrentUser = () => {
+    axios.get("http://localhost:8080/user/currentUser", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Refresh-Token":refreshToken
+      }
+    })
+      .then((res) => {
+        console.log(res.data)
+        dispatch(setUsername(res.data))
+
+        openModal("유저 성공!!")
+      })
+      .catch(() => {
+        openModal("유저 실패 ㅠㅠ")
       })
   }
 
@@ -56,8 +77,7 @@ const Home = () => {
       .then(() => {
         console.log("퇴근 성공!")
 
-        setUserName('')
-        setShow(false)
+        dispatch(setIsLogin(false));
 
         openModal("퇴근 완료! 집가서 푹~ 쉽시다!")
       })
@@ -72,23 +92,22 @@ const Home = () => {
         modal
           ? <Modal message={message}/>
           : <div>
-
             {
-              show && <p className="hi">{state.user}님, 환영합니다!</p>
+              isLogin && <p className="hi">{username}님, 환영합니다!</p>
             }
 
               <p className="title">HILTON DESIGN</p>
               <p className="smallt">Hotel furniture</p>
 
+            <h1>{isLogin}</h1>
             {
-              show
-              ? <div><button onClick={goToWork} className="btn end">출근하기!</button>
-              <button onClick={getOffWork} className="btn end">퇴근하기!</button></div>
-              : <a href={
-                  'https://kauth.kakao.com/oauth/authorize?client_id=a33a6ac40ea15278b115b07b8250e8ea&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code'
-              }>
-                  <img src={kakao_login} onClick={login} className="btn start" />
-                </a>
+              isLogin
+                ? <div>
+                  <button onClick={goToWork} className="btn end">출근하기!</button>
+                  <button onClick={getOffWork} className="btn end">퇴근하기!</button>
+                </div>
+
+                : <button onClick={login} className="btn start" >LOGIN</button>
             }
         </div>
       }
